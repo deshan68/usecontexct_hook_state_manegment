@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, createContext } from "react";
+import { Route, Router, Routes } from "react-router-dom";
+import Contact from "./Contact";
+import Home from "./Home";
+import Navbar from "./Navbar";
+import Profile from "./Profile";
+
+export const AppContext = createContext();
 
 function App() {
+  const [name, setName] = useState("Arun");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={{ name, setName }}>
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<h1>Not Found</h1>} />
+        </Routes>
+      </div>
+    </AppContext.Provider>
   );
 }
 
